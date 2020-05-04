@@ -3,9 +3,18 @@ import os
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
+import requests
+from bs4 import BeautifulSoup
+
 
 def start(bot, update):
-    update.effective_message.reply_text("Hi!")
+    resp = requests.get('https://myfunkybowl.com/collections/bowls')
+    soup = BeautifulSoup(resp.text, 'html.parser')
+    all_bowls = soup.find_all('span', class_='grid-product__title')
+    # date_title = soup.find('header', class_='section-header text-center')
+
+    for bowl in all_bowls:
+        update.effective_message.reply_text('🥗 ' + bowl.text.strip())
 
 
 def echo(bot, update):
@@ -18,11 +27,12 @@ def error(bot, update, error):
 
 if __name__ == "__main__":
     # Set these variable to the appropriate values
+
     TOKEN = os.environ.get('MYFUNKYBOT_API')
-    NAME = os.environ.get('APP_NAME')
+    NAME = os.environ.get('APP_NAME') or 'myfunkybot'
 
     # Port is given by Heroku
-    PORT = os.environ.get('PORT')
+    PORT = os.environ.get('PORT') or 8843
 
     # Enable logging
     logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -34,7 +44,6 @@ if __name__ == "__main__":
     dp = updater.dispatcher
     # Add handlers
     dp.add_handler(CommandHandler('start', start))
-    dp.add_handler(MessageHandler(Filters.text, echo))
     dp.add_error_handler(error)
 
     # Start the webhook

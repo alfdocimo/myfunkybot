@@ -7,7 +7,7 @@ import requests
 from bs4 import BeautifulSoup
 
 
-def start(bot, update):
+def bowls(bot, update):
     resp = requests.get('https://myfunkybowl.com/collections/bowls')
     soup = BeautifulSoup(resp.text, 'html.parser')
     all_bowls = soup.find_all('span', class_='grid-product__title')
@@ -43,7 +43,7 @@ if __name__ == "__main__":
     updater = Updater(TOKEN)
     dp = updater.dispatcher
     # Add handlers
-    dp.add_handler(CommandHandler('start', start))
+    dp.add_handler(CommandHandler('bowls', bowls))
     dp.add_error_handler(error)
 
     # Start the webhook

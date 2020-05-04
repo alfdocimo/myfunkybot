@@ -1,1 +1,1 @@
-pyTelegramBotAPI==0.3.0
+python-telegram-bot

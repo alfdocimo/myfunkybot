@@ -5,6 +5,7 @@ import re
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
 import requests
+
 from bs4 import BeautifulSoup
 
 
@@ -34,10 +35,6 @@ def bowls(bot, update):
     clean_data = '\n'.join(parsed_bowls_list)
 
     update.effective_message.reply_text(clean_data)
-
-
-def echo(bot, update):
-    update.effective_message.reply_text(update.effective_message.text)
 
 
 def error(bot, update, error):

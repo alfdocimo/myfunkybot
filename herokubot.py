@@ -11,7 +11,7 @@ from bs4 import BeautifulSoup
 
 def bowls(bot, update):
     resp = requests.get('https://myfunkybowl.com/collections/bowls')
-    soup = BeautifulSoup(resp.text, 'lxml')
+    soup = BeautifulSoup(resp.text, 'html.parser')
 
     parsed_bowls_list = []
 

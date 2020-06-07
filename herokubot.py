@@ -21,16 +21,11 @@ def bowls(bot, update):
         cta = 'https://myfunkybowl.com/'+cta.attrs['href']
 
         price = bowl.find('span', class_='grid-product__price')
-        available = bowl.find('div', class_='grid-product__sold-out')
-        if(available):
-            available = '✅ disponible'
-        else:
-            available = '❌ agotado'
 
         parse_price = re.search('€(.*?)$', price.text.strip())
 
         parsed_bowls_list.append(
-            '🥗 ' + title.text.strip() + ' '+parse_price[0] + ' '+available + ' 👉 ' + cta + ' 👈'+'\n')
+            '🥗 ' + title.text.strip() + ' '+parse_price[0] + ' 👉 ' + cta + ' 👈'+'\n')
 
     clean_data = '\n'.join(parsed_bowls_list)
 
